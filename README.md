@@ -207,4 +207,4 @@ The plugin code and the original icons are released under the [MIT license](LICE
 - The Go gopher and EditorConfig icons come from [Material Icon Theme](https://github.com/material-extensions/vscode-material-icon-theme) (MIT). The Go gopher was designed by Renée French (CC BY 4.0).
 - The Java icon is an original coffee cup with flame-shaped steam, because the official Java logo isn't freely licensed.
 
-Brand logos are trademarks of their owners and are used only to identify file types. Full license texts are in [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md), which also ships inside the plugin.
+Brand logos are trademarks of their owners and are used only to identify file types.

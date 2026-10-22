@@ -1,0 +1,29 @@
+<!-- Plugin configuration file -> https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
+<idea-plugin>
+    <id>io.github.shangotek.glanceicons</id>
+    <name>Glance Icons</name>
+    <vendor>pracht</vendor>
+
+    <description><![CDATA[
+        <p>Colourful file and folder icons that make the project tree easier to scan.</p>
+        <ul>
+            <li><b>One icon per Angular type:</b> components, services, directives, pipes, guards, interceptors, routes, modules, stores and models,
+                found by file name or by the decorator inside the file, including Angular 22's <code>@Service()</code>
+                and files named after the 2025 style guide (<code>user-card.ts</code>).</li>
+            <li><b>Official logos</b> for 30+ languages, frameworks and tools: React, Next.js, Vue, Svelte, Python, Java, Kotlin, Rust, the Go gopher, Docker and more.</li>
+            <li><b>Config files in their tool's style:</b> angular.json, tsconfig, ESLint, Prettier, Vite, Vitest, Jest, Tailwind, Storybook, Nx, npm, Yarn, pnpm and more.</li>
+            <li><b>Test badges</b> for Java and Kotlin test classes, and a separate icon for every image format.</li>
+            <li><b>Folders:</b> app, src, core, frontend, backend, components, services, directives, pipes, guards, interceptors, store, models and more.</li>
+            <li>Works in light and dark themes and in every JetBrains IDE.</li>
+        </ul>
+        <p>Source roots, content roots and excluded folders keep the IDE's own icons, so you don't lose that information.</p>
+    ]]></description>
+
+    <depends>com.intellij.modules.platform</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <iconProvider implementation="io.github.shangotek.glanceicons.GlanceIconProvider" order="first"/>
+        <fileIconProvider implementation="io.github.shangotek.glanceicons.GlanceFileIconProvider" order="first"/>
+        <projectViewNodeDecorator implementation="io.github.shangotek.glanceicons.GlanceClassNodeDecorator"/>
+    </extensions>
+</idea-plugin>

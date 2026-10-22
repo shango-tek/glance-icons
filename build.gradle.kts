@@ -1,4 +1,5 @@
 import org.jetbrains.intellij.platform.gradle.TestFrameworkType
+import org.jetbrains.kotlin.gradle.dsl.JvmDefaultMode
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
 
@@ -15,6 +16,9 @@ kotlin {
         freeCompilerArgs.add("-Xjdk-release=21")
         // Only use stdlib APIs that exist in the Kotlin bundled with the oldest supported IDE (2025.1 ships Kotlin 2.1).
         apiVersion = KotlinVersion.KOTLIN_2_1
+        // Don't generate forwarding copies of interface default methods: for ProjectViewNodeDecorator that copy
+        // overrides a deprecated method, which the Marketplace verifier reports as deprecated API usage.
+        jvmDefault = JvmDefaultMode.NO_COMPATIBILITY
     }
 }
 
@@ -44,7 +48,9 @@ intellijPlatform {
     }
     pluginVerification {
         ides {
-            recommended()
+            // -PverifyIde=/path/to/ide checks one installed IDE instead of downloading the recommended set.
+            val localIde = providers.gradleProperty("verifyIde")
+            if (localIde.isPresent) local(localIde.get()) else recommended()
         }
     }
 }

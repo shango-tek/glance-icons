@@ -19,6 +19,11 @@
         <p>Source roots, content roots and excluded folders keep the IDE's own icons, so you don't lose that information.</p>
     ]]></description>
 
+    <change-notes><![CDATA[
+        <p><b>1.0.1</b>: no more deprecated-API warnings from the JetBrains Plugin Verifier. Icons and behaviour are unchanged.</p>
+        <p><b>1.0.0</b>: first release.</p>
+    ]]></change-notes>
+
     <depends>com.intellij.modules.platform</depends>
 
     <extensions defaultExtensionNs="com.intellij">

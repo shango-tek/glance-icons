@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Imports the Atom Material Icons catalogue (MIT, (c) Elior "Mallowigi" Boukhobza) into Glance Icons.
 
-Usage: python3 tools/import_atom_icons.py <unpacked a-file-icon-idea jar>
+Usage: python3 tools/import_catalog.py <unpacked a-file-icon-idea jar>
 
 Copies every icon that a rule refers to (plus its _dark variant) and both rule files, and redraws each folder's
 outline on the 16 px grid so its edges land on whole pixels instead of between them.

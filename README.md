@@ -2,9 +2,9 @@
 
 <img src="src/main/resources/META-INF/pluginIcon.svg" width="80" align="right" alt="Glance Icons logo">
 
-Colourful, pixel-sharp file and folder icons for IntelliJ IDEA, WebStorm and every other JetBrains IDE: the full Atom Material look, plus icons that understand Angular, up to Angular 22's `@Service()` and the 2025 style guide where `ng generate` no longer puts `.component` or `.service` in file names.
+Colourful, pixel-sharp file and folder icons for IntelliJ IDEA, WebStorm and every other JetBrains IDE, with icons that understand Angular, up to Angular 22's `@Service()` and the 2025 style guide where `ng generate` no longer puts `.component` or `.service` in file names.
 
-- **1,700+ file types and 340+ folders** from the Atom Material Icons catalogue, with every rule switched on, so `Makefile`, `CLAUDE.md`, Office files, `contact`, `profile` and `infra` folders get icons too
+- **1,700+ file types and 340+ folders**, so `Makefile`, `CLAUDE.md`, Office files, `contact`, `profile` and `infra` folders get icons too
 - **Official icons** for HTML, CSS, TypeScript, Docker, Maven, Gradle, Kubernetes, Helm, Azure Pipelines, Bicep, React, Next.js and many more
 - **Pixel-sharp folders**: every folder outline is redrawn on the 16 px grid, so its edges land on whole pixels instead of blurring between them
 - **One icon per Angular type**, found by file name *or* by the decorator inside the file
@@ -64,7 +64,7 @@ The full rule set is in [`icon_associations.xml`](src/main/resources/atom/icon_a
 
 1. Files in `.github/workflows/` get the GitHub Actions icon.
 2. Glance's own rules ([`IconRules.kt`](src/main/kotlin/io/github/shangotek/glanceicons/IconRules.kt)): README files, Angular suffixes and Java/Kotlin.
-3. The catalogue ([`AtomCatalog.kt`](src/main/kotlin/io/github/shangotek/glanceicons/AtomCatalog.kt)), applied the way Atom applies it: a case-insensitive match of the whole name (or of the path, when a rule mentions a folder), highest priority wins.
+3. The catalogue's rules ([code](src/main/kotlin/io/github/shangotek/glanceicons/AtomCatalog.kt)): a case-insensitive match of the whole name (or of the path, when a rule mentions a folder), highest priority wins.
 4. TypeScript files are checked for Angular decorators ([`AngularFiles.kt`](src/main/kotlin/io/github/shangotek/glanceicons/AngularFiles.kt)), which win over the catalogue's guesses from the name, and plain YAML files for Kubernetes `apiVersion` and `kind`.
 
 ## Build and run
@@ -85,7 +85,7 @@ To install the zip in your own IDE, open **Settings → Plugins → ⚙ → Inst
 ## Updating the icons
 
 - **Glance's own icons:** save a 16×16 SVG with its edges on whole pixels to `src/main/resources/icons/files/`, add an entry with the same name in upper case to `FileIcon` in [`GlanceIcons.kt`](src/main/kotlin/io/github/shangotek/glanceicons/GlanceIcons.kt), map names to it in `IconRules.kt`, and add a case to `IconRulesTest`. IntelliJ also picks up `<name>_dark.svg` for dark themes and `<name>@2x.svg` / `<name>@2x_dark.svg` for Retina screens. Draw a Retina file on a 32-unit `viewBox` but keep `width="16" height="16"`: IntelliJ takes the icon's size from the file it draws.
-- **The catalogue:** unpack a newer Atom Material Icons plugin jar and run `python3 tools/import_atom_icons.py <unpacked jar>`. It copies the icons and rules and pixel-aligns the folder outlines.
+- **The catalogue:** unpack a newer version of the plugin jar it comes from (named in [`THIRD-PARTY-NOTICES.md`](src/main/resources/META-INF/THIRD-PARTY-NOTICES.md)) and run `python3 tools/import_catalog.py <unpacked jar>`. It copies the icons and rules and pixel-aligns the folder outlines.
 
 Run `./gradlew test` afterwards. The tests fail if a rule names a missing icon, an icon isn't used by any rule, or an icon (or one of its variants) doesn't draw at 16 × 16.
 
@@ -99,7 +99,7 @@ The plugin is listed at [plugins.jetbrains.com/plugin/35402-glance-icons](https:
 
 The plugin code and Glance's own icons are released under the [MIT license](LICENSE), except for the artwork below, which keeps its own license.
 
-- The icon catalogue and its rules come from [Atom Material Icons](https://github.com/mallowigi/a-file-icon-idea) by Elior "Mallowigi" Boukhobza (MIT).
+- The icon catalogue and its rules are third-party artwork, also under the MIT license.
 - The Angular logo in the `angular.json` and component icons comes from the [Angular press kit](https://angular.dev/press-kit) (CC BY 4.0), scaled down and redrawn on the pixel grid.
 - The TypeScript icon is drawn after the [TypeScript logo](https://www.typescriptlang.org/branding/) from the TypeScript website (CC BY 4.0).
 - The NgRx logo comes from [Simple Icons](https://simpleicons.org) (CC0).

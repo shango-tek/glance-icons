@@ -7,7 +7,7 @@
     <description><![CDATA[
         <p>Colourful, pixel-sharp file and folder icons that make the project tree easier to scan.</p>
         <ul>
-            <li><b>1,700+ file types and 340+ folders</b> from the Atom Material Icons catalogue, with every rule switched on.</li>
+            <li><b>1,700+ file types and 340+ folders</b>, from <code>Makefile</code> and <code>Dockerfile</code> to Office documents and <code>infra</code> folders.</li>
             <li><b>Official icons</b> for HTML, CSS, TypeScript, Docker, Maven, Gradle, Kubernetes, Helm, Azure Pipelines, Bicep, React, Next.js and many more.</li>
             <li><b>Pixel-sharp folders:</b> every folder outline is redrawn on the 16 px grid.</li>
             <li><b>One icon per Angular type:</b> components, services, directives, pipes, guards, interceptors, routes, modules, stores and models,
@@ -18,12 +18,13 @@
             <li>Works in light and dark themes and in every JetBrains IDE.</li>
         </ul>
         <p>Source roots and content roots keep the IDE's own icons, so you don't lose that information.
-            The icon catalogue comes from Atom Material Icons by Elior "Mallowigi" Boukhobza (MIT),
-            the Angular logo from the Angular press kit (CC BY 4.0).</p>
+            Third-party artwork and its licenses are listed in <code>THIRD-PARTY-NOTICES.md</code>, inside the plugin and in the
+            <a href="https://github.com/shango-tek/glance-icons">GitHub repository</a>.</p>
     ]]></description>
 
     <change-notes><![CDATA[
-        <p><b>1.1.0</b>: the full Atom Material icon catalogue (1,700+ file types, 340+ folders) with pixel-sharp folders;
+        <p><b>1.1.1</b>: reworded plugin description. Icons and behaviour are unchanged.</p>
+        <p><b>1.1.0</b>: icons for 1,700+ file types and 340+ folders, with pixel-sharp folders;
             official icons for Docker, Maven, Gradle, Kubernetes, Azure and more; Kubernetes manifests recognised by content;
             a pixel-sharp TypeScript icon for .ts files, with its own drawing for Retina screens; Angular components get a C
             with the Angular logo, also where the catalogue would guess another framework from the name (app.ts, layout.ts);

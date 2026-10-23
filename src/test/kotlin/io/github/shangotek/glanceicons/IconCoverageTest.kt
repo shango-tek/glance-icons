@@ -16,7 +16,7 @@ class IconCoverageTest {
 
     @Test
     fun `every icon a rule names exists`() {
-        val paths = FileIcon.entries.map { it.path } + IconRules.mappedFolderIcons +
+        val paths = FileIcon.entries.map { it.path } + IconRules.mappedFolderIcons + COMPONENT_FOLDER +
             listOf(FileIcons.ATOM_TYPESCRIPT, FileIcons.NODE, FileIcons.EXPO, FileIcons.YAML, FileIcons.GITHUB_ACTIONS, FileIcons.KUBERNETES) +
             (AtomCatalog.files.byName + AtomCatalog.files.byPath + AtomCatalog.folders.byName + AtomCatalog.folders.byPath).map { it.icon }
         paths.distinct().forEach { assertNotNull("Missing $it", javaClass.getResource(it)) }
@@ -24,7 +24,7 @@ class IconCoverageTest {
 
     @Test
     fun `every bundled svg is used`() {
-        val known = (FileIcon.entries.map { it.path } + IconRules.mappedFolderIcons +
+        val known = (FileIcon.entries.map { it.path } + IconRules.mappedFolderIcons + COMPONENT_FOLDER +
             (AtomCatalog.files.byName + AtomCatalog.files.byPath + AtomCatalog.folders.byName + AtomCatalog.folders.byPath).map { it.icon }).toSet()
         for (dir in listOf("icons/files", "icons/folders", "atom/files", "atom/folders")) {
             val svgs = File("src/main/resources/$dir").listFiles { f -> f.name.endsWith(".svg") }!!

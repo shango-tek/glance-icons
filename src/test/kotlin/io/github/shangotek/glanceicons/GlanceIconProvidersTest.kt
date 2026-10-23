@@ -95,6 +95,20 @@ class GlanceIconProvidersTest : BasePlatformTestCase() {
         assertNull(GlanceFileIconProvider().getIcon(components, 0, project))
     }
 
+    fun `test folders of angular components get the component folder icon`() {
+        myFixture.addFileToProject("app/accordion/accordion.ts", "@Component({ selector: 'app-accordion' })\nexport class Accordion {}")
+        myFixture.addFileToProject("app/old-card/old-card.component.ts", "")
+        myFixture.addFileToProject("app/step-list/step-list.ts", "export const steps = ['cart', 'payment'];")
+        myFixture.addFileToProject("app/app.ts", "@Component({ selector: 'app-root' })\nexport class App {}")
+
+        val icon = { path: String -> GlanceIconProvider().getIcon(psiDirectory(myFixture.findFileInTempDir(path)), 0) }
+        assertSame(Icons.load(COMPONENT_FOLDER), icon("app/accordion"))
+        assertSame(Icons.load(COMPONENT_FOLDER), icon("app/old-card"))
+        assertNull(icon("app/step-list"))
+        // A name with its own icon wins: app/ holds the root component but keeps the app folder icon.
+        assertSame(Icons.load("/atom/folders/app.svg"), icon("app"))
+    }
+
     fun `test source root keeps the IDE icon`() {
         // The light test project's only source root is called "src", a name the rules would otherwise match.
         val sourceRoot = ModuleRootManager.getInstance(module).sourceRoots.single()

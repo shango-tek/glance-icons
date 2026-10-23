@@ -17,7 +17,7 @@ Open [`docs/preview.html`](docs/preview.html) in a browser to see a sample proje
 
 ## Glance's own icons
 
-Drawn on the 16 px grid, some of them after official logos (see [Credits](#credits-and-license)). They take priority over the catalogue. The TypeScript and component icons also have their own drawing for Retina screens.
+Drawn on the 16 px grid, some of them after official logos (see [Credits](#credits-and-license)). They take priority over the catalogue. The TypeScript and component icons, files and folders, also have their own drawing for Retina screens.
 
 | Icon | Used for |
 | --- | --- |
@@ -39,8 +39,11 @@ Drawn on the 16 px grid, some of them after official logos (see [Credits](#credi
 | <img src="src/main/resources/icons/files/kotlin.svg" width="16"> | `.kt`, `.kts` (Gradle scripts get the Gradle icon) |
 | <img src="src/main/resources/icons/files/kotlin_test.svg" width="16"> | `*Test.kt`, `*Tests.kt`, `*IT.kt` |
 | <img src="src/main/resources/icons/folders/directives.svg" width="16"> | `directives` folder (the catalogue has none) |
+| <img src="src/main/resources/icons/folders/component.svg" width="16"> | Component folders, found by content: a folder named after the component inside it (`accordion/accordion.ts`, `card/card.component.ts`) |
 
 Since Angular 20, `ng generate` names components, directives and services without a type suffix (`user-card.ts`), and joins the other suffixes with a hyphen (`auth-guard.ts`). File names alone can't tell those apart, so the plugin reads the decorator. The result is cached per file and refreshed when you save.
+
+Folders work the same way: `ng generate` puts each component in a folder of its own name, so a folder whose same-named file is a component (`accordion/accordion.ts`) gets the component folder icon. A folder name that has an icon of its own keeps it, so `app/` stays the app folder although it holds the root component.
 
 What the code declares also beats what the catalogue guesses from a bare name: it would show Node.js for `app.ts` and `main.ts`, Expo for `app.config.ts` and Next.js for `layout.ts` or `page.ts`. In Angular code, `app.ts` gets the component icon and `main.ts` and `app.config.ts` the TypeScript icon. Tests, stories and mocks (`*.spec.ts`, `*.stories.ts`, `*.mock.ts`) keep their own icons.
 

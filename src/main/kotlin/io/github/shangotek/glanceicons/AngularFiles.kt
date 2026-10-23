@@ -15,6 +15,14 @@ object AngularFiles {
     /** [classify] for a file, recomputed only after the file is saved with new content. */
     fun kindOf(file: VirtualFile): FileIcon? = cache.get(file)
 
+    /** A folder named after the component it holds, the way `ng generate` creates them: `accordion/accordion.ts`. */
+    fun isComponentFolder(folder: VirtualFile): Boolean {
+        val name = folder.name
+        if (folder.findChild("$name.component.ts") != null) return true
+        val main = folder.findChild("$name.ts") ?: return false
+        return kindOf(main) == FileIcon.COMPONENT
+    }
+
     // First match wins, so a component that also declares an @Injectable helper stays a component.
     private val KINDS = listOf(
         Regex("""@Component\s*\(""") to FileIcon.COMPONENT,

@@ -13,6 +13,8 @@
             <li><b>One icon per Angular type:</b> components, services, directives, pipes, guards, interceptors, routes, modules, stores and models,
                 found by file name or by the decorator inside the file, including Angular 22's <code>@Service()</code>
                 and files named after the 2025 style guide (<code>user-card.ts</code>).</li>
+            <li><b>Component folders:</b> a folder named after the component inside it (<code>accordion/accordion.ts</code>)
+                gets its own icon.</li>
             <li><b>Kubernetes manifests by content:</b> any YAML file with <code>apiVersion</code> and <code>kind</code> gets the Kubernetes icon.</li>
             <li><b>Test badges</b> for Java and Kotlin test classes, in the project tree too.</li>
             <li>Works in light and dark themes and in every JetBrains IDE.</li>
@@ -23,6 +25,9 @@
     ]]></description>
 
     <change-notes><![CDATA[
+        <p><b>1.2.0</b>: component folders get their own icon: a folder named after the component inside it
+            (accordion/accordion.ts, card/card.component.ts) shows a blue folder with the Angular logo. Folder names
+            that already have an icon keep it, so app/ stays the app folder.</p>
         <p><b>1.1.1</b>: reworded plugin description. Icons and behaviour are unchanged.</p>
         <p><b>1.1.0</b>: icons for 1,700+ file types and 340+ folders, with pixel-sharp folders;
             official icons for Docker, Maven, Gradle, Kubernetes, Azure and more; Kubernetes manifests recognised by content;

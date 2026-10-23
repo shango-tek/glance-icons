@@ -139,6 +139,8 @@ GLANCE = {
     "app.config.ts": "import { ApplicationConfig } from '@angular/core';\n\nexport const appConfig: ApplicationConfig = { providers: [] };\n",
     "main.ts": "import { bootstrapApplication } from '@angular/platform-browser';\nimport { App } from './app';\nimport { appConfig } from './app.config';\n\nbootstrapApplication(App, appConfig);\n",
     "layout.ts": "import { Component } from '@angular/core';\n\n@Component({ selector: 'app-layout', template: '' })\nexport class Layout {}\n",
+    # A folder named after the component inside it gets the component folder icon.
+    "accordion/accordion.ts": "import { Component } from '@angular/core';\n\n@Component({ selector: 'app-accordion', template: '' })\nexport class Accordion {}\n",
     "user-card.ts": "import { Component } from '@angular/core';\n\n@Component({ selector: 'app-user-card', template: '' })\nexport class UserCard {}\n",
     "user-card.component.ts": "",
     "cart.ts": "import { Service } from '@angular/core';\n\n@Service()\nexport class Cart {}\n",

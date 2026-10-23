@@ -26,7 +26,9 @@ class GlanceIconProvider : IconProvider(), DumbAware {
 
     private fun folderIcon(directory: PsiDirectory): Icon? {
         val folder = directory.virtualFile
-        val icon = IconRules.folderIcon(folder.name) ?: AtomCatalog.folderIcon(folder.name, folder.path) ?: return null
+        // A folder name with its own icon wins, so `app/` keeps its icon although it holds the root component.
+        val icon = IconRules.folderIcon(folder.name) ?: AtomCatalog.folderIcon(folder.name, folder.path)
+            ?: COMPONENT_FOLDER.takeIf { AngularFiles.isComponentFolder(folder) } ?: return null
         // Content roots and source roots keep the IDE's icon, because their look carries meaning.
         val index = ProjectFileIndex.getInstance(directory.project)
         if (index.getContentRootForFile(folder) == folder || index.getSourceRootForFile(folder) == folder) return null

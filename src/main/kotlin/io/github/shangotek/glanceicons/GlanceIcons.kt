@@ -30,6 +30,9 @@ enum class FileIcon {
 /** Angular's directives folder, drawn in Atom's folder style because Atom has none. */
 const val DIRECTIVES_FOLDER = "/icons/folders/directives.svg"
 
+/** A folder that holds one Angular component, such as `accordion/` with `accordion.ts`; see [AngularFiles.isComponentFolder]. */
+const val COMPONENT_FOLDER = "/icons/folders/component.svg"
+
 /** Loads each icon once. IntelliJ uses `<name>_dark.svg` in dark themes and `<name>@2x.svg` on Retina screens when they exist. */
 object Icons {
 

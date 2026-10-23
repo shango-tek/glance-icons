@@ -34,10 +34,10 @@ SOFTWARE.
 
 ## Angular logo
 
-The Angular logo in `src/main/resources/icons/files/angular.svg` and the badge in the component icons
-(`component*.svg`) come from the [Angular press kit](https://angular.dev/press-kit) by the Angular team at Google,
+The Angular logo in `src/main/resources/icons/files/angular.svg`, the badge in the component file icons
+(`icons/files/component*.svg`) and the glyph in the component folder icons (`icons/folders/component*.svg`) come from the [Angular press kit](https://angular.dev/press-kit) by the Angular team at Google,
 licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Glance scales the logo down and redraws it
-pixel by pixel for the 16 px component icon.
+pixel by pixel for the 16 px component icons.
 
 ## TypeScript logo
 

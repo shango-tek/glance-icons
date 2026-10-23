@@ -56,7 +56,7 @@
 
   const SETS = {
     own: ['typescript', 'component', 'angular', 'service', 'directive', 'pipe', 'guard', 'interceptor', 'routes', 'module', 'store',
-          'model', 'readme', 'java', 'java_test', 'kotlin', 'kotlin_test'].map(own).concat(['icons/folders/directives']),
+          'model', 'readme', 'java', 'java_test', 'kotlin', 'kotlin_test'].map(own).concat(['icons/folders/directives', 'icons/folders/component']),
     atom: ['html', 'css', 'js', 'tsconfig', 'testts', 'mock', 'storybook', 'docker', 'dockercompose', 'maven', 'gradle', 'gradlekts', 'kubernetes',
            'helmcharts', 'azure', 'azurepipelines', 'bicep', 'angular', 'react', 'nextjs', 'nodejs', 'npm', 'pnpm', 'tailwindcss',
            'eslint', 'prettier', 'vitest', 'markdown', 'license', 'claude', 'makefile', 'png', 'jpg', 'gif', 'webp',
@@ -93,10 +93,11 @@
     [1, 'src', dir('src')],
     [2, 'app', dir('app')],
     [3, 'components', dir('components')],
-    [4, 'user-card.ts', own('component'), '@Component'],
-    [4, 'user-card.html', atom('html')],
-    [4, 'user-card.css', atom('css')],
-    [4, 'user-card.spec.ts', atom('testts')],
+    [4, 'user-card', 'icons/folders/component', 'holds a component'],
+    [5, 'user-card.css', atom('css')],
+    [5, 'user-card.html', atom('html')],
+    [5, 'user-card.spec.ts', atom('testts')],
+    [5, 'user-card.ts', own('component'), '@Component'],
     [3, 'directives', 'icons/folders/directives'],
     [4, 'tooltip.ts', own('directive'), '@Directive'],
     [3, 'guards', dir('guard')],
@@ -122,7 +123,7 @@
 
   const IDE_FOLDER = '<svg viewBox="0 0 16 16"><path d="M2 4a1 1 0 0 1 1-1h3.3l1.5 1.5H13a1 1 0 0 1 1 1V12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1Z" fill="none" stroke="#6C707E"/></svg>';
   // Hand-tuned drawings for Retina screens, light and dark, which the browser picks like IntelliJ does.
-  const RETINA = { 'icons/files/typescript': ['@2x', '@2x'], 'icons/files/component': ['@2x', '@2x_dark'] };
+  const RETINA = { 'icons/files/typescript': ['@2x', '@2x'], 'icons/files/component': ['@2x', '@2x_dark'], 'icons/folders/component': ['@2x', '@2x'] };
   // Dark panels try <name>_dark.svg first, like IntelliJ does, and fall back to the shared icon.
   const img = (path, dark, cls = '') => {
     const retina = RETINA[path] ? ` srcset="${RES}${path}${RETINA[path][dark ? 1 : 0]}.svg 2x"` : '';

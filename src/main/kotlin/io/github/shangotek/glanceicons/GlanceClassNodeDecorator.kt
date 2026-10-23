@@ -18,7 +18,7 @@ class GlanceClassNodeDecorator : ProjectViewNodeDecorator {
         val file = node.virtualFile ?: return
         if (declaration.name != file.nameWithoutExtension) return
         val icon = IconRules.fileIcon(file.name)?.takeIf { it in CLASS_FILE_ICONS } ?: return
-        data.setIcon(icon.icon)
+        data.setIcon(Icons.load(icon.path))
     }
 
     private companion object {

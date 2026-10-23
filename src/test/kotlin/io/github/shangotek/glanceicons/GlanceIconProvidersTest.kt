@@ -24,43 +24,75 @@ class GlanceIconProvidersTest : BasePlatformTestCase() {
     fun `test file icon in tabs and project tree`() {
         val psiFile = myFixture.addFileToProject("app/user-card.component.ts", "")
 
-        assertSame(FileIcon.COMPONENT.icon, GlanceFileIconProvider().getIcon(psiFile.virtualFile, 0, project))
-        assertSame(FileIcon.COMPONENT.icon, GlanceIconProvider().getIcon(psiFile, 0))
+        assertSame(Icons.load(FileIcon.COMPONENT.path), GlanceFileIconProvider().getIcon(psiFile.virtualFile, 0, project))
+        assertSame(Icons.load(FileIcon.COMPONENT.path), GlanceIconProvider().getIcon(psiFile, 0))
+    }
+
+    fun `test atom catalogue covers everything else`() {
+        val html = myFixture.addFileToProject("web/home.html", "").virtualFile
+        val docker = myFixture.addFileToProject("Dockerfile", "").virtualFile
+
+        assertSame(Icons.load("/atom/files/html.svg"), GlanceFileIconProvider().getIcon(html, 0, project))
+        assertSame(Icons.load("/atom/files/docker.svg"), GlanceFileIconProvider().getIcon(docker, 0, project))
     }
 
     fun `test angular 2025 files are recognised by their contents`() {
         val component = myFixture.addFileToProject("app/user-card.ts", "@Component({ selector: 'app-user-card' })\nexport class UserCard {}")
-        val service = myFixture.addFileToProject("app/user.ts", "@Injectable({ providedIn: 'root' })\nexport class User {}")
+        val service = myFixture.addFileToProject("app/user.ts", "@Service()\nexport class User {}")
         val model = myFixture.addFileToProject("app/user-model.ts", "export interface UserModel { name: string }")
 
-        assertSame(FileIcon.COMPONENT.icon, GlanceFileIconProvider().getIcon(component.virtualFile, 0, project))
-        assertSame(FileIcon.COMPONENT.icon, GlanceIconProvider().getIcon(component, 0))
-        assertSame(FileIcon.SERVICE.icon, GlanceFileIconProvider().getIcon(service.virtualFile, 0, project))
-        assertSame(FileIcon.TYPESCRIPT.icon, GlanceFileIconProvider().getIcon(model.virtualFile, 0, project))
+        assertSame(Icons.load(FileIcon.COMPONENT.path), GlanceFileIconProvider().getIcon(component.virtualFile, 0, project))
+        assertSame(Icons.load(FileIcon.COMPONENT.path), GlanceIconProvider().getIcon(component, 0))
+        assertSame(Icons.load(FileIcon.SERVICE.path), GlanceFileIconProvider().getIcon(service.virtualFile, 0, project))
+        assertSame(Icons.load(FileIcon.TYPESCRIPT.path), GlanceFileIconProvider().getIcon(model.virtualFile, 0, project))
+    }
+
+    fun `test angular code beats the catalogue's guesses from the name`() {
+        val root = myFixture.addFileToProject("app/app.ts", "@Component({ selector: 'app-root' })\nexport class App {}").virtualFile
+        val layout = myFixture.addFileToProject("app/layout/layout.ts", "@Component({ selector: 'app-layout' })\nexport class Layout {}").virtualFile
+        val config = myFixture.addFileToProject("app/app.config.ts", "import { ApplicationConfig } from '@angular/core';\nexport const appConfig: ApplicationConfig = { providers: [] };").virtualFile
+        val nodeServer = myFixture.addFileToProject("api/server.ts", "import express from 'express';\nexpress().listen(3000);").virtualFile
+        val spec = myFixture.addFileToProject("app/app.spec.ts", "@Component({ template: '' })\nclass TestHost {}").virtualFile
+
+        assertSame(Icons.load(FileIcon.COMPONENT.path), GlanceFileIconProvider().getIcon(root, 0, project))
+        assertSame(Icons.load(FileIcon.COMPONENT.path), GlanceFileIconProvider().getIcon(layout, 0, project))
+        assertSame(Icons.load(FileIcon.TYPESCRIPT.path), GlanceFileIconProvider().getIcon(config, 0, project))
+        assertSame(Icons.load(FileIcons.NODE), GlanceFileIconProvider().getIcon(nodeServer, 0, project))
+        assertSame(Icons.load("/atom/files/testts.svg"), GlanceFileIconProvider().getIcon(spec, 0, project))
+    }
+
+    fun `test kubernetes manifests are recognised by their contents`() {
+        val manifest = myFixture.addFileToProject("deploy/web.yaml", "apiVersion: apps/v1\nkind: Deployment\nmetadata:\n  name: web\n")
+        val plain = myFixture.addFileToProject("deploy/values-notes.yaml", "replicas: 3\n")
+
+        assertSame(Icons.load(FileIcons.KUBERNETES), GlanceFileIconProvider().getIcon(manifest.virtualFile, 0, project))
+        assertSame(Icons.load(FileIcons.YAML), GlanceFileIconProvider().getIcon(plain.virtualFile, 0, project))
     }
 
     fun `test github workflows are told apart from other yaml`() {
-        val workflow = myFixture.addFileToProject(".github/workflows/ci.yml", "on: push").virtualFile
-        val other = myFixture.addFileToProject("config/ci.yml", "a: 1").virtualFile
+        val workflow = myFixture.addFileToProject(".github/workflows/release.yml", "on: push").virtualFile
+        val other = myFixture.addFileToProject("deploy/settings-notes.yml", "a: 1").virtualFile
 
-        assertSame(FileIcon.GITHUB_ACTIONS.icon, GlanceFileIconProvider().getIcon(workflow, 0, project))
-        assertSame(FileIcon.YAML.icon, GlanceFileIconProvider().getIcon(other, 0, project))
+        assertSame(Icons.load(FileIcons.GITHUB_ACTIONS), GlanceFileIconProvider().getIcon(workflow, 0, project))
+        assertSame(Icons.load(FileIcons.YAML), GlanceFileIconProvider().getIcon(other, 0, project))
     }
 
     fun `test icon follows the file contents after saving`() {
         val file = myFixture.addFileToProject("app/highlight.ts", "export const x = 1;").virtualFile
-        assertSame(FileIcon.TYPESCRIPT.icon, GlanceFileIconProvider().getIcon(file, 0, project))
+        assertSame(Icons.load(FileIcon.TYPESCRIPT.path), GlanceFileIconProvider().getIcon(file, 0, project))
 
         WriteAction.runAndWait<Throwable> { VfsUtil.saveText(file, "@Directive({ selector: '[appHighlight]' })\nexport class Highlight {}") }
 
-        assertSame(FileIcon.DIRECTIVE.icon, GlanceFileIconProvider().getIcon(file, 0, project))
+        assertSame(Icons.load(FileIcon.DIRECTIVE.path), GlanceFileIconProvider().getIcon(file, 0, project))
     }
 
-    fun `test named folder gets its icon`() {
-        val folder = myFixture.tempDirFixture.findOrCreateDir("components")
+    fun `test named folders get their icon`() {
+        val components = myFixture.tempDirFixture.findOrCreateDir("components")
+        val directives = myFixture.tempDirFixture.findOrCreateDir("directives")
 
-        assertSame(FolderIcon.COMPONENTS.icon, GlanceIconProvider().getIcon(psiDirectory(folder), 0))
-        assertNull(GlanceFileIconProvider().getIcon(folder, 0, project))
+        assertSame(Icons.load("/atom/folders/components.svg"), GlanceIconProvider().getIcon(psiDirectory(components), 0))
+        assertSame(Icons.load(DIRECTIVES_FOLDER), GlanceIconProvider().getIcon(psiDirectory(directives), 0))
+        assertNull(GlanceFileIconProvider().getIcon(components, 0, project))
     }
 
     fun `test source root keeps the IDE icon`() {

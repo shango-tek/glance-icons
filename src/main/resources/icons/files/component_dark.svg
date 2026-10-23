@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+  <defs><linearGradient id="angular" gradientUnits="userSpaceOnUse" x1="9.583" y1="15.417" x2="15.417" y2="9.583"><stop offset="0" stop-color="#E40035"/><stop offset=".24" stop-color="#F60A48"/><stop offset=".35" stop-color="#F20755"/><stop offset=".49" stop-color="#DC087D"/><stop offset=".75" stop-color="#9717E7"/><stop offset="1" stop-color="#6C00F5"/></linearGradient></defs>
+  <path d="M11.5 6A3.5 3.5 0 0 0 8 2.5H6A3.5 3.5 0 0 0 2.5 6V10A3.5 3.5 0 0 0 6 13.5H8" fill="none" stroke="#4E92D9" stroke-width="3"/>
+  <path fill="url(#angular)" d="M10 9h2v1h-2ZM13 9h2v1h-2ZM9 10h3v1h-3ZM13 10h3v1h-3ZM9 11h2v1h-2ZM12 11h1v1h-1ZM14 11h2v1h-2ZM9 12h1v1h-1ZM11 12h3v1h-3ZM15 12h1v1h-1ZM9 13h1v1h-1ZM15 13h1v1h-1ZM11 14h3v1h-3ZM12 15h1v1h-1Z"/>
+</svg>

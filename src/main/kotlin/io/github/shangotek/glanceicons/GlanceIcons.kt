@@ -1,40 +1,39 @@
 package io.github.shangotek.glanceicons
 
 import com.intellij.openapi.util.IconLoader
+import java.util.concurrent.ConcurrentHashMap
 import javax.swing.Icon
 
 /**
- * File icons, loaded from `/icons/files/<name>.svg` where `<name>` is the lowercase entry name.
- * Dark themes pick up `<name>_dark.svg` automatically when it exists.
+ * Glance's own file icons, loaded from `/icons/files/<name>.svg`, where `<name>` is the lowercase entry name.
+ * Everything else comes from the [AtomCatalog].
  */
 enum class FileIcon {
-    // Angular: the Angular logo with a letter badge, plus stores, models and specs
-    COMPONENT, SERVICE, DIRECTIVE, PIPE, GUARD, INTERCEPTOR, ROUTES, MODULE, STORE, MODEL, TEST, ANGULAR,
+    // Angular: a C with the Angular logo for components, a drawing of their own for the other building blocks
+    COMPONENT, SERVICE, DIRECTIVE, PIPE, GUARD, INTERCEPTOR, ROUTES, MODULE, STORE, MODEL,
 
-    // Languages and frameworks
-    TYPESCRIPT, JAVASCRIPT, REACT, NEXTJS, VUE, SVELTE, HTML, CSS, SCSS, JSON, YAML, MARKDOWN, GRAPHQL,
-    PYTHON, JUPYTER, JAVA, JAVA_TEST, KOTLIN, KOTLIN_TEST, RUST, GO, GO_MOD, SWIFT, DART, PHP, RUBY, C, CPP, DOTNET, LUA, SHELL,
+    // The new Angular logo, for angular.json
+    ANGULAR,
 
-    // Config files, each in the style of the tool it configures
-    CONFIG, TSCONFIG, ESLINT, PRETTIER, VITE, VITEST, JEST, TAILWIND, WEBPACK, BABEL, STORYBOOK, NX,
-    NPM, YARN, PNPM, BUN, NODE, EDITORCONFIG, CYPRESS, NESTJS, PRISMA,
+    // Pixel-sharp TypeScript, used for every plain .ts file instead of the catalogue's
+    TYPESCRIPT,
 
-    // Project files and hosting
-    PACKAGE, LOCK, ENV, GIT, GITHUB_ACTIONS, GITLAB, DOCKER, FIREBASE, VERCEL, NETLIFY, README, LICENSE, CHANGELOG,
+    // The blue info sign, for README files
+    README,
 
-    // Media and documents
-    SVG, PNG, JPG, GIF, WEBP, FAVICON, IMAGE, VIDEO, AUDIO, FONT, ARCHIVE, PDF, DOCUMENT, PRESENTATION, SPREADSHEET;
+    // Java and Kotlin, with a test badge for test classes
+    JAVA, JAVA_TEST, KOTLIN, KOTLIN_TEST;
 
     val path: String = "/icons/files/${name.lowercase()}.svg"
-    val icon: Icon by lazy { IconLoader.getIcon(path, FileIcon::class.java) }
 }
 
-/** Folder icons, loaded from `/icons/folders/<name>.svg` where `<name>` is the lowercase entry name. */
-enum class FolderIcon {
-    APP, SOURCE, CORE, FRONTEND, BACKEND,
-    COMPONENTS, SERVICES, DIRECTIVES, PIPES, GUARDS, INTERCEPTORS, STORE, MODELS, SHARED, UTILS, PAGES,
-    ASSETS, STYLES, TESTS, DOCS, SCRIPTS, CONFIG, GIT, PACKAGES, I18N;
+/** Angular's directives folder, drawn in Atom's folder style because Atom has none. */
+const val DIRECTIVES_FOLDER = "/icons/folders/directives.svg"
 
-    val path: String = "/icons/folders/${name.lowercase()}.svg"
-    val icon: Icon by lazy { IconLoader.getIcon(path, FolderIcon::class.java) }
+/** Loads each icon once. IntelliJ uses `<name>_dark.svg` in dark themes and `<name>@2x.svg` on Retina screens when they exist. */
+object Icons {
+
+    private val cache = ConcurrentHashMap<String, Icon>()
+
+    fun load(path: String): Icon = cache.computeIfAbsent(path) { IconLoader.getIcon(it, Icons::class.java) }
 }

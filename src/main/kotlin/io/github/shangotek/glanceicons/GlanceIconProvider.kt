@@ -21,17 +21,15 @@ class GlanceIconProvider : IconProvider(), DumbAware {
 
     private fun fileIcon(file: PsiFile): Icon? {
         val virtualFile = file.virtualFile
-        return (if (virtualFile != null) FileIcons.of(virtualFile) else IconRules.fileIcon(file.name))?.icon
+        return (if (virtualFile != null) FileIcons.of(virtualFile) else FileIcons.byName(file.name))?.let(Icons::load)
     }
 
     private fun folderIcon(directory: PsiDirectory): Icon? {
-        val icon = IconRules.folderIcon(directory.name) ?: return null
-        // Content roots, source roots and excluded folders keep the IDE's icon, because their look carries meaning.
         val folder = directory.virtualFile
+        val icon = IconRules.folderIcon(folder.name) ?: AtomCatalog.folderIcon(folder.name, folder.path) ?: return null
+        // Content roots and source roots keep the IDE's icon, because their look carries meaning.
         val index = ProjectFileIndex.getInstance(directory.project)
-        if (index.isExcluded(folder) || index.getContentRootForFile(folder) == folder || index.getSourceRootForFile(folder) == folder) {
-            return null
-        }
-        return icon.icon
+        if (index.getContentRootForFile(folder) == folder || index.getSourceRootForFile(folder) == folder) return null
+        return Icons.load(icon)
     }
 }

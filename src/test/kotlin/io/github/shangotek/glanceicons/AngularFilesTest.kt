@@ -64,7 +64,8 @@ class AngularFilesTest {
     }
 
     @Test
-    fun `plain typescript is not classified`() {
-        assertNull(AngularFiles.classify("export interface User { name: string }\nimport { Component } from '@angular/core';"))
+    fun `importing angular alone is no building block`() {
+        assertEquals(FileIcon.TYPESCRIPT, AngularFiles.classify("export interface User { name: string }\nimport { Component } from '@angular/core';"))
+        assertNull(AngularFiles.classify("export const sum = (a: number, b: number) => a + b;"))
     }
 }

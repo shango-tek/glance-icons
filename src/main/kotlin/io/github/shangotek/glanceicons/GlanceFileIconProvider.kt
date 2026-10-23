@@ -13,5 +13,5 @@ import javax.swing.Icon
 class GlanceFileIconProvider : FileIconProvider, DumbAware {
 
     override fun getIcon(file: VirtualFile, flags: Int, project: Project?): Icon? =
-        if (file.isDirectory) null else FileIcons.of(file)?.icon
+        if (file.isDirectory) null else FileIcons.of(file)?.let(Icons::load)
 }

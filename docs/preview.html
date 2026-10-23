@@ -5,14 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Glance Icons Preview</title>
 <style>
-  :root {
-    --page: #f4f5f7;
-    --text: #1f2328;
-    --muted: #6c707e;
-  }
+  :root { --page: #f4f5f7; --text: #1f2328; --muted: #6c707e; }
   body { margin: 0; padding: 24px 16px 48px; background: var(--page); color: var(--text);
          font: 14px/1.45 -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, sans-serif; }
-  h1 { font-size: 22px; margin: 0 0 4px; }
+  h1 { font-size: 22px; margin: 0 0 4px; display: flex; align-items: center; gap: 12px; }
   h2 { font-size: 15px; margin: 32px 0 12px; }
   p.lead { color: var(--muted); margin: 0 0 8px; }
   .themes { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; }
@@ -24,15 +20,15 @@
   .row { display: flex; align-items: center; gap: 6px; white-space: nowrap; }
   .row img, .row svg { width: 16px; height: 16px; flex: none; }
   .note { opacity: .45; font-size: 11px; }
-  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(128px, 1fr)); gap: 4px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 4px; }
   .cell { display: flex; align-items: center; gap: 8px; padding: 6px 8px; border-radius: 6px; font-size: 12px; }
   .cell img.big { width: 32px; height: 32px; }
   .cell img.small { width: 16px; height: 16px; }
 </style>
 </head>
 <body>
-<h1>Glance Icons</h1>
-<p class="lead">Every icon at the real 16&nbsp;px size, in the IntelliJ light and dark themes. Open this file straight from the repository.</p>
+<h1><img src="../src/main/resources/META-INF/pluginIcon.svg" width="40" height="40" alt="">Glance Icons</h1>
+<p class="lead">Icons at the real 16&nbsp;px size, in the IntelliJ light and dark themes. Open this file straight from the repository.</p>
 
 <h2>In a project tree</h2>
 <div class="themes">
@@ -40,118 +36,113 @@
   <div class="panel dark"><h3>Dark</h3><div class="tree" data-tree></div></div>
 </div>
 
-<h2>File icons</h2>
+<h2>Glance's own icons</h2>
 <div class="themes">
-  <div class="panel light"><div class="grid" data-set="files"></div></div>
-  <div class="panel dark"><div class="grid" data-set="files"></div></div>
+  <div class="panel light"><div class="grid" data-set="own"></div></div>
+  <div class="panel dark"><div class="grid" data-set="own"></div></div>
 </div>
 
-<h2>Folder icons</h2>
+<h2>Official icons from the Atom Material catalogue (a selection of 1,700+)</h2>
 <div class="themes">
-  <div class="panel light"><div class="grid" data-set="folders"></div></div>
-  <div class="panel dark"><div class="grid" data-set="folders"></div></div>
+  <div class="panel light"><div class="grid" data-set="atom"></div></div>
+  <div class="panel dark"><div class="grid" data-set="atom"></div></div>
 </div>
 
 <script>
-  const ICONS = '../src/main/resources/icons/';
+  const RES = '../src/main/resources/';
+  const own = n => `icons/files/${n}`;
+  const atom = n => `atom/files/${n}`;
+  const dir = n => `atom/folders/${n}`;
+
   const SETS = {
-    files: ['component', 'service', 'directive', 'pipe', 'guard', 'interceptor', 'routes', 'module', 'store', 'model', 'test', 'angular',
-            'typescript', 'javascript', 'react', 'nextjs', 'vue', 'svelte', 'html', 'css', 'scss', 'json', 'yaml', 'markdown', 'graphql',
-            'python', 'jupyter', 'java', 'java_test', 'kotlin', 'kotlin_test', 'rust', 'go', 'go_mod', 'swift', 'dart', 'php', 'ruby',
-            'c', 'cpp', 'dotnet', 'lua', 'shell',
-            'config', 'tsconfig', 'eslint', 'prettier', 'vite', 'vitest', 'jest', 'tailwind', 'webpack', 'babel', 'storybook', 'nx',
-            'npm', 'yarn', 'pnpm', 'bun', 'node', 'editorconfig', 'cypress', 'nestjs', 'prisma',
-            'package', 'lock', 'env', 'git', 'github_actions', 'gitlab', 'docker', 'firebase', 'vercel', 'netlify',
-            'readme', 'license', 'changelog',
-            'svg', 'png', 'jpg', 'gif', 'webp', 'favicon', 'image', 'video', 'audio', 'font', 'archive',
-            'pdf', 'document', 'presentation', 'spreadsheet'],
-    folders: ['app', 'source', 'core', 'frontend', 'backend', 'components', 'services', 'directives', 'pipes', 'guards', 'interceptors',
-              'store', 'models', 'shared', 'utils', 'pages', 'assets', 'styles', 'tests', 'docs', 'scripts', 'config', 'git',
-              'packages', 'i18n'],
+    own: ['typescript', 'component', 'angular', 'service', 'directive', 'pipe', 'guard', 'interceptor', 'routes', 'module', 'store',
+          'model', 'readme', 'java', 'java_test', 'kotlin', 'kotlin_test'].map(own).concat(['icons/folders/directives']),
+    atom: ['html', 'css', 'js', 'tsconfig', 'testts', 'mock', 'storybook', 'docker', 'dockercompose', 'maven', 'gradle', 'gradlekts', 'kubernetes',
+           'helmcharts', 'azure', 'azurepipelines', 'bicep', 'angular', 'react', 'nextjs', 'nodejs', 'npm', 'pnpm', 'tailwindcss',
+           'eslint', 'prettier', 'vitest', 'markdown', 'license', 'claude', 'makefile', 'png', 'jpg', 'gif', 'webp',
+           'svg', 'pdf', 'word', 'powerpoint', 'excel'].map(atom)
+           .concat(['src', 'app', 'components', 'node', 'web', 'docs', 'tests', 'i18n', 'idea', 'kubernetes', 'azure-devops', 'docker'].map(dir)),
   };
 
-  // [depth, name, icon] — icon is "files/x", "folders/x", or "ide" for a folder that keeps the IDE's own icon
+  // [depth, name, icon, note] – icon is a resource path without .svg, or 'ide' for the IDE's own folder
   const TREE = [
-    [0, 'my-angular-app', 'ide', 'content root keeps the IDE icon'],
-    [1, '.github', 'folders/git'],
-    [2, 'workflows', 'ide'],
-    [3, 'ci.yml', 'files/github_actions'],
-    [1, 'public', 'folders/assets'],
-    [2, 'favicon.ico', 'files/favicon'],
-    [2, 'logo.svg', 'files/svg'],
-    [1, 'src', 'folders/source'],
-    [2, 'app', 'folders/app'],
-    [3, 'components', 'folders/components'],
-    [4, 'profile.ts', 'files/component', '@Component'],
-    [4, 'profile.html', 'files/html'],
-    [4, 'profile.scss', 'files/scss'],
-    [4, 'profile.spec.ts', 'files/test'],
-    [4, 'profile.stories.ts', 'files/storybook'],
-    [3, 'directives', 'folders/directives'],
-    [4, 'tooltip.ts', 'files/directive', '@Directive'],
-    [3, 'guards', 'folders/guards'],
-    [4, 'admin-guard.ts', 'files/guard'],
-    [3, 'interceptors', 'folders/interceptors'],
-    [4, 'log-interceptor.ts', 'files/interceptor'],
-    [3, 'models', 'folders/models'],
-    [4, 'user.model.ts', 'files/model'],
-    [3, 'pipes', 'folders/pipes'],
-    [4, 'euro-pipe.ts', 'files/pipe'],
-    [3, 'services', 'folders/services'],
-    [4, 'auth.ts', 'files/service', '@Service() – Angular 22'],
-    [4, 'user.service.ts', 'files/service'],
-    [3, 'store', 'folders/store'],
-    [4, 'cart.ts', 'files/store', 'signalStore'],
-    [3, 'app.config.ts', 'files/config'],
-    [3, 'app.routes.ts', 'files/routes'],
-    [3, 'app.ts', 'files/component', '@Component'],
-    [3, 'legacy.module.ts', 'files/module'],
-    [2, 'environments', 'folders/config'],
-    [3, 'environment.ts', 'files/env'],
-    [2, 'styles.scss', 'files/scss'],
-    [1, 'angular.json', 'files/angular'],
-    [1, 'eslint.config.js', 'files/eslint'],
-    [1, 'package.json', 'files/package'],
-    [1, 'pnpm-lock.yaml', 'files/pnpm'],
-    [1, 'tsconfig.json', 'files/tsconfig'],
-    [1, 'firebase.json', 'files/firebase'],
-    [1, 'README.md', 'files/readme'],
-    [0, 'polyglot-playground', 'ide', 'other languages'],
-    [1, 'backend', 'folders/backend'],
-    [2, 'UserService.java', 'files/java'],
-    [2, 'UserServiceTest.java', 'files/java_test'],
-    [2, 'build.gradle.kts', 'ide-gradle', 'keeps the IDE icon'],
-    [1, 'frontend', 'folders/frontend'],
-    [2, 'App.tsx', 'files/react'],
-    [2, 'App.vue', 'files/vue'],
-    [1, 'main.go', 'files/go'],
-    [1, 'main.py', 'files/python'],
-    [1, 'main.rs', 'files/rust'],
-    [1, 'release.zip', 'files/archive'],
+    [0, 'my-shop', 'ide', 'content root keeps the IDE icon'],
+    [1, '.idea', dir('idea')],
+    [1, '.github', dir('github')],
+    [2, 'workflows', dir('ci')],
+    [3, 'release.yml', atom('githubActions')],
+    [1, 'frontend', dir('client')],
+    [2, 'App.tsx', atom('react')],
+    [2, 'vite.config.ts', atom('vite')],
+    [1, 'backend', dir('server')],
+    [2, 'pom.xml', atom('maven')],
+    [2, 'build.gradle.kts', atom('gradlekts')],
+    [2, 'UserService.java', own('java')],
+    [2, 'UserServiceTest.java', own('java_test')],
+    [1, 'docs', dir('docs')],
+    [2, 'ARCHITECTURE.md', atom('architecture')],
+    [2, 'pitch.pptx', atom('powerpoint')],
+    [1, 'infra', dir('serverless')],
+    [2, 'k8s', dir('kubernetes')],
+    [3, 'deployment.yaml', atom('kubernetesdepl')],
+    [3, 'web.yaml', atom('kubernetes'), 'found by apiVersion + kind'],
+    [2, 'azure-pipelines.yml', atom('azurepipelines')],
+    [2, 'main.bicep', atom('bicep')],
+    [1, 'node_modules', dir('node')],
+    [1, 'public', dir('web')],
+    [1, 'src', dir('src')],
+    [2, 'app', dir('app')],
+    [3, 'components', dir('components')],
+    [4, 'user-card.ts', own('component'), '@Component'],
+    [4, 'user-card.html', atom('html')],
+    [4, 'user-card.css', atom('css')],
+    [4, 'user-card.spec.ts', atom('testts')],
+    [3, 'directives', 'icons/folders/directives'],
+    [4, 'tooltip.ts', own('directive'), '@Directive'],
+    [3, 'guards', dir('guard')],
+    [4, 'admin-guard.ts', own('guard')],
+    [3, 'services', dir('functions')],
+    [4, 'cart.ts', own('service'), '@Service()'],
+    [3, 'app.config.ts', own('typescript'), 'Angular code, not Expo'],
+    [3, 'app.routes.ts', own('routes')],
+    [3, 'app.ts', own('component'), 'root component, not Node.js'],
+    [2, 'i18n', dir('i18n')],
+    [3, 'fr.ts', atom('i18nlang')],
+    [2, 'main.ts', own('typescript')],
+    [1, '.gitignore', atom('gitignore')],
+    [1, 'CLAUDE.md', atom('claude')],
+    [1, 'Dockerfile', atom('docker')],
+    [1, 'LICENSE', atom('license')],
+    [1, 'Makefile', atom('makefile')],
+    [1, 'package.json', atom('npm')],
+    [1, 'README.md', own('readme')],
+    [1, 'angular.json', own('angular')],
+    [1, 'tsconfig.json', atom('tsconfig')],
   ];
 
-  // Dark panels try <name>_dark.svg first, like IntelliJ does, and fall back to the shared icon.
-  const img = (icon, dark, cls = '') => dark
-    ? `<img class="${cls}" src="${ICONS}${icon}_dark.svg" onerror="this.onerror=null;this.src='${ICONS}${icon}.svg'" alt="">`
-    : `<img class="${cls}" src="${ICONS}${icon}.svg" alt="">`;
-
   const IDE_FOLDER = '<svg viewBox="0 0 16 16"><path d="M2 4a1 1 0 0 1 1-1h3.3l1.5 1.5H13a1 1 0 0 1 1 1V12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1Z" fill="none" stroke="#6C707E"/></svg>';
-
-  const IDE_GRADLE = '<svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="5.5" fill="none" stroke="#6C707E"/></svg>';
+  // Hand-tuned drawings for Retina screens, light and dark, which the browser picks like IntelliJ does.
+  const RETINA = { 'icons/files/typescript': ['@2x', '@2x'], 'icons/files/component': ['@2x', '@2x_dark'] };
+  // Dark panels try <name>_dark.svg first, like IntelliJ does, and fall back to the shared icon.
+  const img = (path, dark, cls = '') => {
+    const retina = RETINA[path] ? ` srcset="${RES}${path}${RETINA[path][dark ? 1 : 0]}.svg 2x"` : '';
+    return dark
+      ? `<img class="${cls}" src="${RES}${path}_dark.svg"${retina} onerror="this.onerror=null;this.src='${RES}${path}.svg'" alt="">`
+      : `<img class="${cls}" src="${RES}${path}.svg"${retina} alt="">`;
+  };
 
   document.querySelectorAll('[data-tree]').forEach(tree => {
     const dark = tree.closest('.dark') !== null;
     tree.innerHTML = TREE.map(([depth, name, icon, note]) => {
-      const picture = icon === 'ide' ? IDE_FOLDER : icon === 'ide-gradle' ? IDE_GRADLE : img(icon, dark);
+      const picture = icon === 'ide' ? IDE_FOLDER : img(icon, dark);
       return `<div class="row" style="padding-left:${8 + depth * 18}px">${picture}<span>${name}</span>${note ? `<span class="note">${note}</span>` : ''}</div>`;
     }).join('');
   });
 
   document.querySelectorAll('[data-set]').forEach(grid => {
-    const set = grid.dataset.set;
     const dark = grid.closest('.dark') !== null;
-    grid.innerHTML = SETS[set].map(name =>
-      `<div class="cell">${img(`${set}/${name}`, dark, 'big')}${img(`${set}/${name}`, dark, 'small')}<span>${name}</span></div>`
+    grid.innerHTML = SETS[grid.dataset.set].map(path =>
+      `<div class="cell">${img(path, dark, 'big')}${img(path, dark, 'small')}<span>${path.split('/').pop()}</span></div>`
     ).join('');
   });
 </script>

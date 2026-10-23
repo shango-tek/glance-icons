@@ -1,6 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
-  <path d="M6.5 12.2V4.6M13.5 10.7V3.1" stroke="#8B5CF6" stroke-width="1.4"/>
-  <path d="M5.8 3.5L14.2 1.7V4.2L5.8 6Z" fill="#8B5CF6"/>
-  <ellipse cx="4.6" cy="12.6" rx="2.3" ry="1.75" transform="rotate(-20 4.6 12.6)" fill="#8B5CF6"/>
-  <ellipse cx="11.6" cy="11.1" rx="2.3" ry="1.75" transform="rotate(-20 11.6 11.1)" fill="#8B5CF6"/>
-</svg>
